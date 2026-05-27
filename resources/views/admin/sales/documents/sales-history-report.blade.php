@@ -5,11 +5,29 @@
         @media print {
             @page {
                 size: landscape;
-                margin: 0;
+                margin: 1cm;
             }
             body {
-                padding: 1cm;
+                padding: 0;
                 background-color: white !important;
+            }
+            /* Fix the main content overflow that clips page 2+ */
+            .bg-white.rounded-xl.border.border-gray-200 {
+                overflow: visible !important;
+            }
+            .border.border-gray-200.rounded-lg.overflow-hidden {
+                overflow: visible !important;
+            }
+            /* Allow table rows to break across pages */
+            table {
+                page-break-inside: auto !important;
+            }
+            thead {
+                display: table-header-group !important;
+            }
+            tr {
+                page-break-inside: avoid !important;
+                page-break-after: auto !important;
             }
         }
     </style>
@@ -191,10 +209,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="mt-6 pt-3 border-t border-gray-100 text-center">
-                    <p class="text-[12px] text-gray-500">Dokumen ini mengikuti format nota pembelian untuk konsistensi laporan.</p>
                 </div>
             </div>
         </div>

@@ -21,11 +21,23 @@
         @media print {
             aside { display: none !important; }
             header { display: none !important; }
-            main { overflow: visible !important; }
-            .max-w-7xl { max-width: none !important; padding: 0 !important; margin: 0 !important; }
-            .max-w-2xl { max-width: none !important; padding: 0 !important; margin: 0 !important; }
+            main {
+                overflow: visible !important;
+                overflow-x: visible !important;
+                overflow-y: visible !important;
+                height: auto !important;
+                max-height: none !important;
+            }
+            .max-w-7xl, .max-w-5xl, .max-w-2xl {
+                max-width: none !important;
+            }
             body { background: white !important; }
-            .flex.h-screen { display: block !important; height: auto !important; overflow: visible !important; }
+            .flex.h-screen {
+                display: block !important;
+                height: auto !important;
+                max-height: none !important;
+                overflow: visible !important;
+            }
             .no-print, [data-no-print] { display: none !important; }
         }
     </style>
