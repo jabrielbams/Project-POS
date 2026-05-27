@@ -660,6 +660,38 @@
                 dueDate: '',
                 showStoreChangeConfirm: false,
 
+                get cartStorageKey() {
+                    return this.selectedStore ? 'pos_cart_store_' + this.selectedStore.id : null;
+                },
+
+                init() {
+                    this.restoreCart();
+                },
+
+                saveCart() {
+                    if (this.cartStorageKey) {
+                        try {
+                            sessionStorage.setItem(this.cartStorageKey, JSON.stringify(this.cart));
+                        } catch (e) {
+                            console.warn('Failed to save cart to sessionStorage:', e);
+                        }
+                    }
+                },
+
+                restoreCart() {
+                    if (this.cartStorageKey) {
+                        try {
+                            const savedCart = sessionStorage.getItem(this.cartStorageKey);
+                            if (savedCart) {
+                                this.cart = JSON.parse(savedCart);
+                                this.calculateTotal();
+                            }
+                        } catch (e) {
+                            console.warn('Failed to restore cart from sessionStorage:', e);
+                        }
+                    }
+                },
+
                 addToCart(product) {
                     if (!this.selectedStore) return;
                     if (product.stock <= 0) return;
@@ -698,6 +730,9 @@
                 clearCart() {
                     this.cart = [];
                     this.calculateTotal();
+                    if (this.cartStorageKey) {
+                        sessionStorage.removeItem(this.cartStorageKey);
+                    }
                 },
 
                 requestStoreChange() {
@@ -721,6 +756,7 @@
 
                 calculateTotal() {
                     this.total = this.cart.reduce((sum, item) => sum + ((Number(item.price || 0)) * item.qty), 0);
+                    this.saveCart();
                 },
 
                 get totalCapital() {
@@ -787,6 +823,9 @@
                         const result = await response.json();
 
                         if (response.ok) {
+                            if (this.cartStorageKey) {
+                                sessionStorage.removeItem(this.cartStorageKey);
+                            }
                             window.location.href = '{{ route("admin.pos.terminal") }}';
                         } else {
                             console.error('Checkout Error:', result);
