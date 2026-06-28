@@ -46,3 +46,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/sales/{sale}/invoice', [SalesDocumentController::class, 'invoice'])->name('admin.sales.invoice');
     Route::post('/admin/sales/{id}/pay-installment', [\App\Http\Controllers\Admin\PosController::class, 'payInstallment'])->name('admin.sales.pay-installment');
 });
+
+// Catch-all: redirect unregistered paths to dashboard or login
+Route::fallback(function () {
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('login');
+});
