@@ -1,7 +1,7 @@
 <x-guest-layout>
     <!-- Header -->
     <div class="text-center mb-8">
-        <h2 class="text-xl font-bold text-gray-900 tracking-tight">Selamat Datang Kembali</h2>
+        <h2 class="text-xl font-bold text-gray-900 tracking-tight">Selamat Datang</h2>
         <p class="text-sm text-gray-500 mt-1.5">Masuk ke akun Anda untuk melanjutkan</p>
     </div>
 
@@ -24,12 +24,6 @@
         <div>
             <div class="flex items-center justify-between mb-2">
                 <label for="password" class="block text-[13px] font-semibold text-gray-700">Password</label>
-                @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}"
-                        class="text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors">
-                        Lupa password?
-                    </a>
-                @endif
             </div>
             <input id="password" type="password" name="password" required autocomplete="current-password"
                 placeholder="••••••••"
@@ -41,8 +35,7 @@
         <div class="flex items-center pt-1 gap-2">
             <input id="remember_me" type="checkbox" name="remember"
                 class="w-4 h-4 gap-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-offset-0 transition-colors" />
-            <label for="remember_me" class="ml-2.5 text-sm text-gray-600 select-none cursor-pointer">Ingat
-                saya</label>
+            <label for="remember_me" class="ml-2.5 text-sm text-gray-600 select-none cursor-pointer">Tetap login selama 30 hari</label>
         </div>
 
         <!-- Submit -->
@@ -51,20 +44,4 @@
             Masuk
         </button>
     </form>
-
-    <!-- Divider -->
-    <div class="relative my-7 mb-4 mt-4">
-        <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-200"></div>
-        </div>
-        <div class="relative flex justify-center text-xs">
-            <span class="px-3 bg-white text-gray-400 font-medium">atau</span>
-        </div>
-    </div>
-
-    <!-- Register Link -->
-    <a href="{{ route('register') }}"
-        class="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-gray-700 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all active:scale-[0.98]">
-        Buat Akun Baru
-    </a>
 </x-guest-layout>
