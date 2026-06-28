@@ -42,7 +42,7 @@
             </svg>
         </div>
         <div>
-            <p class="text-xs font-medium text-gray-500 mb-1">Total Transactions</p>
+            <p class="text-xs font-medium text-gray-500 mb-1">Total Transaksi</p>
             <div class="flex items-baseline justify-between">
                 <h3 class="text-2xl font-bold text-gray-900 tracking-tight">
                     {{ number_format($totalTransactions, 0, ',', '.') }}

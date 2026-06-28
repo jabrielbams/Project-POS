@@ -4,13 +4,18 @@ namespace App\Livewire\Admin;
 
 use App\Models\Sale;
 use App\Models\Store;
+use App\Livewire\Admin\Sales\EditSaleModal;
+use App\Livewire\Admin\Sales\DeleteSaleModal;
 use Livewire\Attributes\Url;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class SalesHistory extends Component
 {
     use WithPagination;
+
+    public $refreshKey = 0;
 
     #[Url]
     public $search = '';
@@ -48,6 +53,22 @@ class SalesHistory extends Component
     public function updatingFilterDate()
     {
         $this->resetPage();
+    }
+
+    #[On('saleUpdated')]
+    public function refreshAfterEdit($saleId)
+    {
+        $this->refreshKey++;
+        $this->resetPage();
+        $this->dispatch('notify', message: 'Sale updated successfully', type: 'success');
+    }
+
+    #[On('saleDeleted')]
+    public function refreshAfterDelete($saleId)
+    {
+        $this->refreshKey++;
+        $this->resetPage();
+        $this->dispatch('notify', message: 'Sale deleted successfully', type: 'success');
     }
 
     public function render()

@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/pos/checkout', [\App\Http\Controllers\Admin\PosController::class, 'checkout'])->name('admin.pos.checkout');
     Route::get('/admin/sales-history', \App\Livewire\Admin\SalesHistory::class)->name('admin.sales-history.index');
     Route::post('/admin/sales-history/report', [SalesDocumentController::class, 'salesHistoryReport'])->name('admin.sales-history.report');
+    Route::get('/admin/activity-log', \App\Livewire\Admin\ActivityLog::class)->name('admin.activity-log.index');
     Route::get('/admin/sales/{id}', \App\Livewire\Admin\Sales\SalesDetail::class)->name('admin.sales.show');
     Route::get('/admin/sales/{sale}/invoice', [SalesDocumentController::class, 'invoice'])->name('admin.sales.invoice');
     Route::post('/admin/sales/{id}/pay-installment', [\App\Http\Controllers\Admin\PosController::class, 'payInstallment'])->name('admin.sales.pay-installment');

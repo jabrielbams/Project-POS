@@ -79,6 +79,7 @@
         @include('admin.sales.partials.table', [
             'sales' => $sales,
             'showPagination' => true,
+            'showActions' => false,
         ])
     </div>
 

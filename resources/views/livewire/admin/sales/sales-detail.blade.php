@@ -1,4 +1,6 @@
-<style>
+<div class="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+
+    <style>
         @media print {
             @page {
                 margin: 0;
@@ -8,9 +10,7 @@
                 background-color: white !important;
             }
         }
-</style>
-
-<div class="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8"">
+    </style>
 
     {{-- Header Actions --}}
     <div class="mb-4 flex justify-between items-center no-print print:hidden">
@@ -36,6 +36,23 @@
         </div>
     </div>
 
+    <!-- Tab Navigation -->
+    <div x-data="{ activeTab: 'details' }" class="mt-6">
+        <div class="flex border-b border-gray-200 gap-4 no-print">
+            <button @click="activeTab = 'details'"
+                    :class="activeTab === 'details' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-600'"
+                    class="px-3 py-2 font-medium text-sm hover:text-blue-600 transition-colors">
+                Details
+            </button>
+            <button @click="activeTab = 'activity'"
+                    :class="activeTab === 'activity' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-600'"
+                    class="px-3 py-2 font-medium text-sm hover:text-blue-600 transition-colors">
+                Activity Log
+            </button>
+        </div>
+
+        <!-- Details Tab Content -->
+        <div x-show="activeTab === 'details'" class="mt-4">
     {{-- Invoice Card --}}
     <div
     class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden print:shadow-none print:border-none print:rounded-none print:w-full print:max-w-none">
@@ -187,7 +204,7 @@
 </div>
 
     {{-- Installment Section (only shown if installment) --}}
-    @if($sale->status === 'installment')
+    @if($sale->status === 'installment' && !$sale->trashed())
         <div x-data="{
                             showPayModal: false,
                             selectedMethod: '{{ $installMethod }}',
@@ -357,5 +374,12 @@
             </div>
         </div>
     @endif
+        </div> <!-- Close Details tab content -->
+
+        <!-- Activity Log Tab Content -->
+        <div x-show="activeTab === 'activity'" class="mt-4">
+            <livewire:admin.sales.activity-log-tab :sale="$sale" />
+        </div>
+    </div> <!-- Close tab wrapper -->
 {{-- blade-formatter-enable --}}
 </div>

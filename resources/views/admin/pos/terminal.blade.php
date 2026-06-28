@@ -18,7 +18,6 @@
             <div class="mb-5 flex flex-col sm:flex-row justify-between items-start xl:items-center gap-4">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Point of Sale</h1>
-                    <p class="text-sm text-gray-500 mt-1 font-medium">Buat transaksi baru dan kelola keranjang belanja.</p>
                 </div>
             </div>
 
@@ -65,7 +64,6 @@
 
             @if(!$selectedStore)
                 <div class="mb-6">
-                    <h2 class="text-sm font-bold text-gray-800 mb-3">Pilih Store Terlebih Dahulu</h2>
                     <form action="{{ route('admin.pos.terminal') }}" method="GET" class="mb-4 flex flex-col lg:flex-row gap-3">
                         <div class="relative flex-1">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -81,7 +79,7 @@
                             <div class="relative sm:min-w-[190px]">
                                 <select name="store_category" onchange="this.form.submit()"
                                     class="appearance-none block w-full px-4 py-3 border border-gray-200 bg-white rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors shadow-sm pr-10">
-                                    <option value="">Semua Kategori Store</option>
+                                    <option value="">Semua Kategori</option>
                                     @foreach($storeCategories as $category)
                                         <option value="{{ $category }}" {{ $storeCategory === $category ? 'selected' : '' }}>{{ $category }}</option>
                                     @endforeach
@@ -94,7 +92,7 @@
                             </div>
                             <button type="submit"
                                 class="inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-white bg-blue-600 rounded-xl shadow-sm hover:bg-blue-700 transition-colors whitespace-nowrap">
-                                Cari Store
+                                Cari Toko
                             </button>
                             @if($storeSearch !== '' || $storeCategory !== '')
                                 <a href="{{ route('admin.pos.terminal') }}"
@@ -134,7 +132,7 @@
                                             </td>
                                         </tr>
                                         @foreach($groupStores as $store)
-                                            <tr x-show="open" x-cloak class="hover:bg-gray-50 transition-colors">
+                                            <tr x-show="open" class="hover:bg-gray-50 transition-colors">
                                                 <td class="px-4 py-3">
                                                     <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold text-gray-600 bg-gray-100 border border-gray-200">
                                                         {{ $store->code }}
@@ -151,7 +149,7 @@
                                                 <td class="px-4 py-3 text-right">
                                                     <a href="{{ route('admin.pos.terminal', ['store' => $store->id]) }}"
                                                         class="inline-flex items-center justify-center px-3 py-2 text-[13px] font-semibold text-blue-700 bg-blue-50 border border-blue-100 rounded-lg hover:bg-blue-100 transition-colors">
-                                                        Pilih Store
+                                                        Pilih Toko
                                                     </a>
                                                 </td>
                                             </tr>

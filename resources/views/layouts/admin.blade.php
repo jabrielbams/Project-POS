@@ -123,7 +123,7 @@
                                     d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z">
                                 </path>
                             </svg>
-                            <span x-show="sidebarExpanded" class="truncate">Store</span>
+                            <span x-show="sidebarExpanded" class="truncate">Toko</span>
                         </a>
 
                         <a href="/admin/products"
@@ -136,7 +136,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                             </svg>
-                            <span x-show="sidebarExpanded" class="truncate">Products</span>
+                            <span x-show="sidebarExpanded" class="truncate">Produk</span>
                         </a>
                     </div>
                 </div>
@@ -175,7 +175,20 @@
                                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
                                 </path>
                             </svg>
-                            <span x-show="sidebarExpanded" class="truncate">Sales History</span>
+                            <span x-show="sidebarExpanded" class="truncate">Daftar Penjualan</span>
+                        </a>
+                        <a href="{{ route('admin.activity-log.index') }}"
+                            class="group flex items-center py-1.5 text-[14px] font-medium transition-all duration-200 border 
+                                  {{ request()->routeIs('admin.activity-log.index') ? 'bg-white text-blue-700 border-gray-200 shadow-sm rounded-lg' : 'text-gray-600 border-transparent hover:bg-gray-100 rounded-lg' }}"
+                            :class="sidebarExpanded ? 'px-2.5 justify-start' : 'px-0 justify-center'"
+                            title="Activity Log">
+                            <svg class="w-[18px] h-[18px] shrink-0 {{ request()->routeIs('admin.activity-log.index') ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-400' }}"
+                                :class="sidebarExpanded ? 'mr-3' : 'mr-0'" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span x-show="sidebarExpanded" class="truncate">Log Aktivitas</span>
                         </a>
                     </div>
                 </div>

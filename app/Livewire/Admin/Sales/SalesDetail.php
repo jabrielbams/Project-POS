@@ -15,7 +15,7 @@ class SalesDetail extends Component
 
     public function mount($id)
     {
-        $this->sale = Sale::with(['cashier', 'store', 'saleItems.product', 'installmentPayments'])->findOrFail($id);
+        $this->sale = Sale::withTrashed()->with(['cashier', 'store', 'saleItems.product', 'installmentPayments'])->findOrFail($id);
     }
 
     public function openPayModal()

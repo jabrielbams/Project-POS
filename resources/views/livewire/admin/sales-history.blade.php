@@ -1,4 +1,5 @@
 <div wire:key="sales-history-root" class="animate-in fade-in duration-300 relative w-full pb-10">
+<!-- Single root wrapper for Livewire -->
 
     <!-- Breadcrumbs Section -->
     <nav class="flex items-center space-x-1.5 text-sm font-medium mb-4" aria-label="Breadcrumb">
@@ -105,10 +106,10 @@
 
     <!-- Filter and Search Section -->
     <form method="GET" action="{{ url()->current() }}"
-        class="mb-4 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 mt-4">
+        class="mb-4 flex flex-row items-center justify-between gap-3 mt-4">
 
         <!-- Left: Search input -->
-        <div class="relative w-full xl:w-[320px]">
+        <div class="relative w-full max-w-xs">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -120,24 +121,23 @@
                 placeholder="Cari invoice, kasir, atau store...">
         </div>
 
-        <!-- Right: Filters dropdowns -->
-        <!-- Right: Filters dropdowns -->
+        <!-- Right: Filters dropdowns + clear -->
         <div x-data="{
             dateType: '{{ $filterDate ?? 'semua' }}',
             previousDateType: '{{ $filterDate ?? 'semua' }}',
             showCustomModal: false
-        }" class="flex flex-wrap items-center gap-2 w-full xl:w-auto">
+        }" class="flex items-center gap-2 shrink-0">
 
             <!-- Filter Date Type -->
-            <div class="relative min-w-[140px]">
+            <div class="relative">
                 <select name="filterDate" x-model="dateType"
                     @change="if($event.target.value === 'custom') { showCustomModal = true; } else { $event.target.form.submit(); }"
                     class="appearance-none block w-full px-3 py-2 border border-gray-300 bg-white rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors shadow-sm pr-8">
-                    <option value="semua">Semua Waktu</option>
-                    <option value="harian">Harian (Hari Ini)</option>
-                    <option value="mingguan">Mingguan (7 Hari)</option>
-                    <option value="bulanan">Bulanan (Bulan Ini)</option>
-                    <option value="custom">Pilih Rentang Waktu</option>
+                    <option value="semua">Semua</option>
+                    <option value="harian">Harian</option>
+                    <option value="mingguan">7 Hari</option>
+                    <option value="bulanan">30 Hari</option>
+                    <option value="custom">Custom</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -203,10 +203,10 @@
             </div>
 
             <!-- Filter Status -->
-            <div class="relative min-w-[140px]">
+            <div class="relative">
                 <select name="filterStatus" onchange="this.form.submit()"
                     class="appearance-none block w-full px-3 py-2 border border-gray-300 bg-white rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors shadow-sm pr-8">
-                    <option value="">Semua Status</option>
+                    <option value="">Status</option>
                     <option value="completed" {{ $filterStatus === 'completed' ? 'selected' : '' }}>Lunas</option>
                     <option value="installment" {{ $filterStatus === 'installment' ? 'selected' : '' }}>Cicilan</option>
                 </select>
@@ -217,10 +217,10 @@
             </div>
 
             <!-- Filter Store Category -->
-            <div class="relative min-w-[180px]">
+            <div class="relative">
                 <select name="filterStore" onchange="this.form.submit()"
                     class="appearance-none block w-full px-3 py-2 border border-gray-300 bg-white rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors shadow-sm pr-8">
-                    <option value="">Semua Kategori Store</option>
+                    <option value="">Toko</option>
                     @foreach($storeCategories as $storeCategory)
                         <option value="{{ $storeCategory }}" {{ (string) $filterStore === (string) $storeCategory ? 'selected' : '' }}>
                             {{ $storeCategory }}
@@ -233,14 +233,14 @@
                 </div>
             </div>
 
-            <!-- Reset Button (Enhanced) -->
+            <!-- Clear Filters Button -->
             <a href="{{ request()->url() }}"
-                class="inline-flex items-center gap-2 px-3 py-2 border border-gray-200 bg-white rounded-lg text-gray-500 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all shadow-sm text-[13px] font-medium shrink-0"
+                class="inline-flex items-center gap-1.5 px-3 py-2 border border-gray-200 bg-white rounded-lg text-gray-500 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all shadow-sm text-[13px] font-medium shrink-0"
                 title="Clear Filters">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
-                <span>Clear</span>
+                <span>Reset</span>
             </a>
         </div>
     </form>
@@ -350,45 +350,50 @@
             </div>
         </div>
     </div>
-</div>
+    <!-- Edit Sale Modal Component -->
+    <livewire:admin.sales.edit-sale-modal />
 
-<script>
-    (function () {
-        function initSalesHistorySelection() {
-            var form = document.getElementById('sales-report-form');
-            if (!form) return;
+    <!-- Delete Sale Modal Component -->
+    <livewire:admin.sales.delete-sale-modal />
 
-            var selectAllInput = form.querySelector('[data-select-all-input]');
-            var selectAllBox = document.querySelector('[data-select-all]');
-            var rowBoxes = Array.prototype.slice.call(document.querySelectorAll('[data-sale-checkbox]'));
+    <script>
+        (function () {
+            function initSalesHistorySelection() {
+                var form = document.getElementById('sales-report-form');
+                if (!form) return;
 
-            if (!selectAllInput || !selectAllBox || rowBoxes.length === 0) return;
+                var selectAllInput = form.querySelector('[data-select-all-input]');
+                var selectAllBox = document.querySelector('[data-select-all]');
+                var rowBoxes = Array.prototype.slice.call(document.querySelectorAll('[data-sale-checkbox]'));
 
-            function syncSelectAll() {
-                var allChecked = rowBoxes.every(function (checkbox) {
-                    return checkbox.checked;
+                if (!selectAllInput || !selectAllBox || rowBoxes.length === 0) return;
+
+                function syncSelectAll() {
+                    var allChecked = rowBoxes.every(function (checkbox) {
+                        return checkbox.checked;
+                    });
+                    selectAllBox.checked = allChecked;
+                    selectAllInput.value = allChecked ? '1' : '0';
+                }
+
+                selectAllBox.addEventListener('change', function () {
+                    rowBoxes.forEach(function (checkbox) {
+                        checkbox.checked = selectAllBox.checked;
+                    });
+                    selectAllInput.value = selectAllBox.checked ? '1' : '0';
                 });
-                selectAllBox.checked = allChecked;
-                selectAllInput.value = allChecked ? '1' : '0';
+
+                rowBoxes.forEach(function (checkbox) {
+                    checkbox.addEventListener('change', syncSelectAll);
+                });
+
+                syncSelectAll();
             }
 
-            selectAllBox.addEventListener('change', function () {
-                rowBoxes.forEach(function (checkbox) {
-                    checkbox.checked = selectAllBox.checked;
-                });
-                selectAllInput.value = selectAllBox.checked ? '1' : '0';
-            });
-
-            rowBoxes.forEach(function (checkbox) {
-                checkbox.addEventListener('change', syncSelectAll);
-            });
-
-            syncSelectAll();
-        }
-
-        document.addEventListener('DOMContentLoaded', initSalesHistorySelection);
-        document.addEventListener('livewire:initialized', initSalesHistorySelection);
-        document.addEventListener('livewire:navigated', initSalesHistorySelection);
-        document.addEventListener('livewire:updated', initSalesHistorySelection);
-    })();
-</script>
+            document.addEventListener('DOMContentLoaded', initSalesHistorySelection);
+            document.addEventListener('livewire:initialized', initSalesHistorySelection);
+            document.addEventListener('livewire:navigated', initSalesHistorySelection);
+            document.addEventListener('livewire:updated', initSalesHistorySelection);
+        })();
+    </script>
+</div>
